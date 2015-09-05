@@ -1,23 +1,23 @@
 package com.evonymus.roe.model;
 
 public class PerDiem {
-    private Integer id;
-    private Integer idCurrency;
-    private Double rate;
-    private Integer idPerDiemPeriod;
 
-    public PerDiem() {}
+    private Integer id;
+    private Double rate;
+    private Currency currency;
+    private PerDiemPeriod perDiemPeriod;
+
+    public PerDiem(){}
 
     public PerDiem(Integer id,
-            Integer idCurrency,
             Double rate,
-            Integer idPerDiemPeriod) {
+            Currency currency,
+            PerDiemPeriod perDiemPeriod) {
 
         this.id = id;
-        this.idCurrency = idCurrency;
         this.rate = rate;
-        this.idPerDiemPeriod = idPerDiemPeriod;
-
+        this.currency = currency;
+        this.perDiemPeriod = perDiemPeriod;
     }
 
     /**
@@ -35,20 +35,6 @@ public class PerDiem {
     }
 
     /**
-     * @return the idCurrency
-     */
-    public Integer getIdCurrency() {
-        return idCurrency;
-    }
-
-    /**
-     * @param idCurrency the idCurrency to set
-     */
-    public void setIdCurrency(Integer idCurrency) {
-        this.idCurrency = idCurrency;
-    }
-
-    /**
      * @return the rate
      */
     public Double getRate() {
@@ -63,16 +49,31 @@ public class PerDiem {
     }
 
     /**
-     * @return the idPerDiemPeriod
+     * @return the currency
      */
-    public Integer getIdPerDiemPeriod() {
-        return idPerDiemPeriod;
+    public Currency getCurrency() {
+        return currency;
     }
 
     /**
-     * @param idPerDiemPeriod the idPerDiemPeriod to set
+     * @param currency the currency to set
      */
-    public void setIdPerDiemPeriod(Integer idPerDiemPeriod) {
-        this.idPerDiemPeriod = idPerDiemPeriod;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
+
+    /**
+     * @return the perDiemPeriod
+     */
+    public PerDiemPeriod getPerDiemPeriod() {
+        return perDiemPeriod;
+    }
+
+    /**
+     * @param perDiemPeriod the perDiemPeriod to set
+     */
+    public void setPerDiemPeriod(PerDiemPeriod perDiemPeriod) {
+        this.perDiemPeriod = perDiemPeriod;
+    }
+
 }

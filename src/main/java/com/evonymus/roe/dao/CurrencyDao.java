@@ -5,4 +5,6 @@ import com.evonymus.roe.model.Currency;
 
 public interface CurrencyDao {
     List<Currency> getCurrencyList();
+    Currency getCountryCurrency(int idCountry);
+    Currency getPerDiemCurrency(int idCountry);
 }
