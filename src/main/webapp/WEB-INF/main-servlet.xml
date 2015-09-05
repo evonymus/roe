@@ -28,11 +28,16 @@
 
     <bean id="currencyDao" class="com.evonymus.roe.dao.CurrencyDaoImpl" parent="baseDao"/>
 
+    <bean id="countryDao" class="com.evonymus.roe.dao.CountryDaoImpl" parent="baseDao"/>
+
     <bean id="roeService" class="com.evonymus.roe.service.RoeServiceImpl"
             p:roeDao-ref="roeDao" />
 
     <bean id="currencyService" class="com.evonymus.roe.service.CurrencyServiceImpl"
             p:currencyDao-ref="currencyDao"/> 
+
+    <bean id="countryService" class="com.evonymus.roe.service.CountryServiceImpl"
+            p:countryDao-ref="countryDao"/>
 
     <bean id="homeController" class="com.evonymus.roe.controller.HomeController"
             p:roeService-ref="roeService"/>

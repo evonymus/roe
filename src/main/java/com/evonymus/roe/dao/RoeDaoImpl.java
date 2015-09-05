@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import com.evonymus.roe.model.Roe;
 @Component
 public class RoeDaoImpl extends BaseDaoImpl implements RoeDao {
-	private final static String ALL_FOR_DAY = "SELECT id, published, tab_id, code, roe, name FROM nbp_roe WHERE published = ?";
-	private final static String ROE_FOR_DAY = "SELECT id, published, tab_id, code, roe, name FROM nbp_roe WHERE published = ? AND code=?";
+	private final static String ALL_FOR_DAY = "SELECT id, published, tab_id, code, roe, name_pl FROM nbp_roe WHERE published = ?";
+	private final static String ROE_FOR_DAY = "SELECT id, published, tab_id, code, roe, name_pl FROM nbp_roe WHERE published = ? AND code=?";
     private final static String ALL_CODE = "SELECT code FROM nbp_roe GROUP BY code";
 
 	public List<Roe> getListForDay(Date date) {

@@ -14,11 +14,11 @@ public class RoeRowMapper implements RowMapper<Roe>{
 		Roe roe = new Roe();
 		
 		roe.setId(rs.getInt("ID"));
-		roe.setPublished(rs.getDate("published"));
+		roe.setPublished(rs.getDate("PUBLISHED"));
 		roe.setTabId(rs.getString("TAB_ID"));
 		roe.setCode(rs.getString("CODE"));
 		roe.setRoe(rs.getDouble("ROE"));
-		roe.setName(rs.getString("NAME"));
+		roe.setNamePL(rs.getString("NAME_PL"));
 		
 		return roe;
 	}

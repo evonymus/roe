@@ -2,8 +2,8 @@ package com.evonymus.roe.model;
 
 public class Currency {
     private Integer id;
-    private String curCode;
-    private String curName;
+    private String code;
+    private String name;
 
     public Currency() {
     }
@@ -12,8 +12,8 @@ public class Currency {
             String curCode,
             String curName) {
         this.id = id;
-        this.curCode = curCode;
-        this.curName = curName;
+        this.code = curCode;
+        this.name = curName;
     }
     /**
      * @return the id
@@ -32,29 +32,29 @@ public class Currency {
     /**
      * @return the curCode
      */
-    public String getCurCode() {
-        return curCode;
+    public String getCode() {
+        return code;
     }
 
     /**
      * @param curCode the curCode to set
      */
-    public void setCurCode(String curCode) {
-        this.curCode = curCode;
+    public void setCode(String curCode) {
+        this.code = curCode;
     }
 
     /**
      * @return the curName
      */
-    public String getCurName() {
-        return curName;
+    public String getName() {
+        return name;
     }
 
     /**
      * @param curName the curName to set
      */
-    public void setCurName(String curName) {
-        this.curName = curName;
+    public void setName(String curName) {
+        this.name = curName;
     }
 
 }
