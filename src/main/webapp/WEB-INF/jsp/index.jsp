@@ -6,16 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"> 
             <link rel="stylesheet" href="<c:out value='res/css/bootstrap.min.css'/>">
                 <link rel="stylesheet" href="<c:out value='res/css/jquery.datetimepicker.css'/>">
+                <link rel="stylesheet" href="<c:out value='res/css/style.css'/>">
                 </head>
                 <body>
                     <div class="container">
                         <div class="row">
-                            <div class="well well-lg col-lg-12" id="header">
+                            <div class="well well-lg col-lg-12 col-md-12" id="header">
                                 <h2 class="text-center text-primary">Per Diem Calculator</h2>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-md-4">
                                 <form:form id="form" role="form">
                                     <div class="form-group">
                                         <label for="dateFrom">Date From</label>
@@ -31,9 +32,17 @@
                                         <label for="country">Country</label>
                                         <select name="country" id="country" class="form-control" placeholder="country"></select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="breakfast">Breakfasts NOT included
+                                        </label>
+                                        <input class="form-control" type="text" id="breakfast" value="0" name="breakfast">
+                                    </div>
                                 </form:form>
+                                <div id="img">
+                                    <img class="round" src="<c:out value='res/img/blue_earth.png'/>" alt="globe">
+                                </div>
                             </div>
-                            <div id="perDiem" class="col-lg-8 "></div>
+                            <div id="perDiem" class="col-lg-8 col-md-8 "></div>
                         </div>
                     </div>
                 </body>
@@ -74,15 +83,26 @@
                         calculate();
                     });
 
+                    $('#breakfast').blur(function() {
+                        calculate();
+                    })
+
                     function calculate() {
                         $('#dateFromMessage').empty();
                         if (dateFrom && dateTo) {
                             var diff= new Date(dateTo - dateFrom);
                             var id = $('#country option:selected').attr('id');
                             if (diff > 0 && id > 0 ) {
-                                var address='perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id;
+                                var breakfast=parseInt($('#breakfast').val());
+                                if (breakfast==NaN) {
+                                    breakfast = 0;
+                                    $('#breakfast').val(0);
+                                }
+                                console.log(breakfast);
+                                var address= 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id + '/' + breakfast;
+                                console.log(address);
                                 $.ajax({
-                                        url: 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id,
+                                        url: 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id + '/' + breakfast,
                                         dataType: "json",
                                         success: function(data) {
                                             $('#perDiem').empty();
@@ -98,8 +118,10 @@
                                             + "<table class='table'><tr><th>Tab.No</th><th>Published</th><th>Currency</th><th>ROE</th></tr>"
                                             + "<tr><td>"+data.roe.tabId +"</td><td>" + data.roe.published + "</td><td>"+ data.roe.code + "</td><td>"+data.roe.roe+"</td></tr></table><br/>"
                                             + "<h4 class='text-center text-danger'> Calculation Results</h4></br>"
-                                            + "<table class='table'><tr><th>Days</th><th>Hours</th><th>Due in " + data.roe.code +"</th><th>Due in PLN</th></tr>"
-                                            + "<tr><td>"+data.days+"</td><td>" + data.hours+ "</td><td>"+ data.dueInCurrency + "</td><td>"+data.dueInPLN +"</td></tr></table><br/>"
+                                            + "<table class='table'><tr><th>Days</th><th>Hours</th><th>Total Per Diem</th><th>Breakfast</th><th>Due in " 
+                                                + data.roe.code +"</th><th>Due in PLN</th></tr>"
+                                                + "<tr><td>"+data.days+"</td><td>" + data.hours + "</td><td>"+data.totalPerDiem + '</td><td>'+ data.breakfastDeduction + '</td><td>'
+                                                + data.dueInCurrency + "</td><td>"+data.dueInPLN +"</td></tr></table><br/>"
                                             + "</div>";
                                             $('#perDiem').append(res);
 

@@ -12,8 +12,8 @@ import com.evonymus.roe.model.Roe;
  */
 public class CalculationBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private Date dateFrom;
+    private static final long serialVersionUID = 1L;
+    private Date dateFrom;
     private Date dateTo;
     private int days;
     private int hours;
@@ -23,6 +23,8 @@ public class CalculationBean implements Serializable {
     private double dueInPLN;
     private Country country;
     private PerDiem perDiem;
+    private double breakfastDeduction;
+    private double totalPerDiem;
 
     /**
      * @return the dateFrom
@@ -162,5 +164,33 @@ public class CalculationBean implements Serializable {
      */
     public void setPerDiem(PerDiem perDiem) {
         this.perDiem = perDiem;
+    }
+
+    /**
+     * @return the breakfastDeduction
+     */
+    public double getBreakfastDeduction() {
+        return breakfastDeduction;
+    }
+
+    /**
+     * @param breakfastDeduction the breakfastDeduction to set
+     */
+    public void setBreakfastDeduction(double breakfastDeduction) {
+        this.breakfastDeduction = breakfastDeduction;
+    }
+
+    /**
+     * @return the finalPerDiem
+     */
+    public double getTotalPerDiem() {
+        return totalPerDiem;
+    }
+
+    /**
+     * @param finalPerDiem the finalPerDiem to set
+     */
+    public void setTotalPerDiem(double finalPerDiem) {
+        this.totalPerDiem = finalPerDiem;
     }
 }
