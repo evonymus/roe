@@ -3,8 +3,6 @@ package com.evonymus.roe.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +14,7 @@ import com.evonymus.roe.beans.CalculationBean;
 import com.evonymus.roe.model.PerDiem;
 import com.evonymus.roe.service.CountryService;
 import com.evonymus.roe.service.PerDiemService;
+import com.evonymus.roe.service.RoeService;
 
 @Controller
 @EnableWebMvc
@@ -29,26 +28,34 @@ public class PerDiemController {
     @Autowired
     private CountryService countryService;
 
+    @Autowired
+    private RoeService roeService;
+
     @RequestMapping(value="/{idCountry}", method=RequestMethod.GET)
     public @ResponseBody PerDiem getCountryPerDiem(@PathVariable("idCountry")int idCountry) {
         return perDiemService.getCountryPerDiem(idCountry);
     }
 
-    @RequestMapping(value="/{dateFrom}/{dateTo}/{idCountry}", method=RequestMethod.GET)
-    public @ResponseBody CalculationBean getCalculation(@PathVariable("dateFrom")@DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date dateFrom
-            , @PathVariable("dateTo")@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")Date dateTo
+    @RequestMapping(value="/{from}/{to}/{idCountry}", method=RequestMethod.GET)
+    public @ResponseBody CalculationBean getCalculation(@PathVariable("from") long from
+            , @PathVariable("to")long to
             , @PathVariable("idCountry") int idCountry) {
 
         int days = 0;
         int hours = 0;
-        float coefficient = 1.0f;
+        Date dateFrom = new Date(from);
+        Date dateTo = new Date(to);
+        double coefficient = 1.0d;
+        double dueInCur = 1.0d;
+        double dueInPLN = 1.0d;
+    
         CalculationBean result = new CalculationBean();
         long diff = dateTo.getTime() - dateFrom.getTime();
         if(diff>0) {
             
             // calculating the number of full days
             days = (int) Math.floor(diff/MS_IN_DAY); 
-            hours = (int)Math.floor((diff - result.getDays() * MS_IN_DAY)/MS_IN_HOUR);
+            hours = (int)Math.floor((diff - days * MS_IN_DAY)/MS_IN_HOUR);
 
             if (hours > 12) {
                 coefficient = days + 1;
@@ -64,7 +71,11 @@ public class PerDiemController {
             result.setHours(hours);
             result.setCountry(countryService.getCountry(idCountry));
             result.setPerDiem(perDiemService.getCountryPerDiem(idCountry));
-            result.setDueInCurrency(coefficient * result.getPerDiem().getRate());
+            dueInCur = Math.round(coefficient * result.getPerDiem().getRate() * 100) / 100.0;
+            result.setDueInCurrency(dueInCur);
+            result.setRoe(roeService.getRoeForDay(dateTo, result.getPerDiem().getCurrency().getCode()));
+            dueInPLN = Math.round(result.getRoe().getRoe() * result.getDueInCurrency() * 100)/100.0;
+            result.setDueInPLN(dueInPLN);
         }
 
         return result;

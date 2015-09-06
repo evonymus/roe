@@ -11,7 +11,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="well well-lg col-lg-12" id="header">
-                                <h2 class="text-center text-primary">Rates Of Exchange</h2>
+                                <h2 class="text-center text-primary">Per Diem Calculator</h2>
                             </div>
                         </div>
                         <div class="row">
@@ -70,27 +70,45 @@
 
                     $('#country').change(function() {
                         var id = $(this).children(":selected").attr("id");
-                        getPerDiem(id);
+                        //getPerDiem(id);
+                        calculate();
                     });
 
                     function calculate() {
                         $('#dateFromMessage').empty();
                         if (dateFrom && dateTo) {
                             var diff= new Date(dateTo - dateFrom);
-                            if (diff < 0) {
-                                $('#dateFromMessage').append('<p class="text-danger">Date From must be earlier than date to</p>');
-                            } else {
-                                var id = $('#country').children(":selected").attr("id");
-                                var adress='perDiem/'+dateFrom.toISOString() +'/'+dateTo.toISOString()+'/'+ id;
-                                alert(adress);
+                            var id = $('#country option:selected').attr('id');
+                            if (diff > 0 && id > 0 ) {
+                                var address='perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id;
                                 $.ajax({
-                                    url:'perDiem/'+dateFrom.toISOString() +'/'+dateTo.toISOString()+'/'+ id,
-                                    dataType: "json",
-                                    success: function(data) {
-                                        $('#perDiem').append('<p>'+data.dueInCurrency + '</>');
-                                    }
+                                        url: 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id,
+                                        dataType: "json",
+                                        success: function(data) {
+                                            $('#perDiem').empty();
+                                            var v_dateFrom = new Date(data.dateFrom);
+                                            var v_dateTo = new Date(data.dateTo);
+                                            $('#perDiem').addClass("well");
+                                            var res="<div class='well'><h3 class='text-center text-primary'> Settlement </h3><br/>"
+                                            + "<h4 class='text-center text-success'> Basic Elements</h4>"
+                                            + "<table class='table'><tr><th>Date From</th><th>Date To</th><th>Currency</th><th>Rate</th></tr>"
+                                            + "<tr><td>"+v_dateFrom.toISOString() +"</td><td>" + v_dateTo.toISOString() + "</td><td>"+ data.roe.code 
+                                            + "</td><td>"+data.perDiem.rate+"</td></tr></table><br/>"
+                                            + "<h4 class='text-center text-warning'> Rate Of Exchange</h4></br>"
+                                            + "<table class='table'><tr><th>Tab.No</th><th>Published</th><th>Currency</th><th>ROE</th></tr>"
+                                            + "<tr><td>"+data.roe.tabId +"</td><td>" + data.roe.published + "</td><td>"+ data.roe.code + "</td><td>"+data.roe.roe+"</td></tr></table><br/>"
+                                            + "<h4 class='text-center text-danger'> Calculation Results</h4></br>"
+                                            + "<table class='table'><tr><th>Days</th><th>Hours</th><th>Due in " + data.roe.code +"</th><th>Due in PLN</th></tr>"
+                                            + "<tr><td>"+data.days+"</td><td>" + data.hours+ "</td><td>"+ data.dueInCurrency + "</td><td>"+data.dueInPLN +"</td></tr></table><br/>"
+                                            + "</div>";
+                                            $('#perDiem').append(res);
 
+                                        }
                                 });
+                            } else {
+                                if (diff < 0) {
+                                    $('#dateFromMessage').append('<p class="text-danger">Date From must be earlier than date to</p>');
+                                }
                             }
                         }
                     }
@@ -102,6 +120,7 @@
                                     url: 'perDiem/'+ idCountry,
                                     dataType: "json",
                                     success: function(data) {
+                                        $('#perDiem').empty();
                                         $('#perDiem').addClass("well");
                                         var res = "<h4 class='text-center text-primary'> Per Diem Data</h4><table class='table' > <tr><th>Currency</th><th>Code</th><th>Rate</th></tr><tr><td>" 
                                         + data.currency.name + "</td><td>" + data.currency.code + "</td><td>" + data.rate + "</td></tr></table>";

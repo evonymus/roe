@@ -9,7 +9,7 @@ import com.evonymus.roe.model.Roe;
 
 @Service
 public interface RoeService {
-	List<Roe> getListForDay(Date date);
-	Roe getRoeForDay(Date date, String code);
+	List<Roe> getListForDay(final Date date);
+	Roe getRoeForDay(final Date date, String code);
     List<String>getCodeList();
 }

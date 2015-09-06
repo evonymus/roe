@@ -20,7 +20,7 @@ public class RoeServiceImpl implements RoeService{
 		this.roeDao = roeDao;
 	}
 
-	public List<Roe> getListForDay(Date date) {
+	public List<Roe> getListForDay(final Date date) {
 		try {
 			return roeDao.getListForDay(date);
 			
@@ -29,7 +29,7 @@ public class RoeServiceImpl implements RoeService{
 		}
 	}
 
-	public Roe getRoeForDay(Date date, String code) {
+	public Roe getRoeForDay(final Date date, String code) {
 		try {
 			return roeDao.getRoeForDay(date, code);
 			

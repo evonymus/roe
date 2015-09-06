@@ -1,5 +1,6 @@
 package com.evonymus.roe.beans;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.evonymus.roe.model.Country;
@@ -9,8 +10,10 @@ import com.evonymus.roe.model.Roe;
 
 /* class containig details of settlemnt of per diem
  */
-public class CalculationBean {
-    private Date dateFrom;
+public class CalculationBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date dateFrom;
     private Date dateTo;
     private int days;
     private int hours;
