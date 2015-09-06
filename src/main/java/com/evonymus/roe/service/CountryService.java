@@ -6,5 +6,6 @@ import com.evonymus.roe.model.Country;
 
 public interface CountryService {
     List<Country> getCountryList();
+    Country getCountry(int idCountry);
     
 }

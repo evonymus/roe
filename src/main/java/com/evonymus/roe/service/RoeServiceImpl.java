@@ -4,12 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 
 import com.evonymus.roe.dao.RoeDao;
 import com.evonymus.roe.model.Roe;
 
-@Service
 public class RoeServiceImpl implements RoeService{
 	private RoeDao roeDao;
 	

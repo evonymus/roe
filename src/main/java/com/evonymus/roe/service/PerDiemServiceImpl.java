@@ -7,7 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import com.evonymus.roe.dao.PerDiemDao;
 import com.evonymus.roe.model.PerDiem;
 
-public class PerDiemServiceImpl {
+public class PerDiemServiceImpl implements PerDiemService {
 
     private PerDiemDao perDiemDao;
     

@@ -33,6 +33,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="var" path="M2_REPO/junit/junit/4.12/junit-4.12.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-test/4.1.6.RELEASE/spring-test-4.1.6.RELEASE.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-core/4.1.6.RELEASE/spring-core-4.1.6.RELEASE.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/jstl/jstl/1.2/jstl-1.2.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/springframework/spring-web/4.1.6.RELEASE/spring-web-4.1.6.RELEASE.jar"/>

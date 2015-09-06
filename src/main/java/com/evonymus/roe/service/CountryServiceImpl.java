@@ -19,6 +19,15 @@ public class CountryServiceImpl implements CountryService {
         }
     }
 
+    public Country getCountry(int idCountry) {
+        try {
+            return countryDao.getCountry(idCountry);
+
+        }catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
     /**
      * @return the countryDao
      */
@@ -32,5 +41,6 @@ public class CountryServiceImpl implements CountryService {
     public void setCountryDao(CountryDao countryDao) {
         this.countryDao = countryDao;
     }
+
     
 }

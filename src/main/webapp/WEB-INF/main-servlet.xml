@@ -20,6 +20,7 @@
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
             p:dataSource-ref="dataSource" />
+    <!--Dao layer configuratin-->
 
     <bean id="baseDao" class="com.evonymus.roe.dao.BaseDaoImpl"
             p:jdbcTemplate-ref="jdbcTemplate" />
@@ -30,6 +31,10 @@
 
     <bean id="countryDao" class="com.evonymus.roe.dao.CountryDaoImpl" parent="baseDao"/>
 
+    <bean id="perDiemDao" class="com.evonymus.roe.dao.PerDiemDaoImpl" parent="baseDao"/>
+
+    <!--Service Layer Configuration-->
+
     <bean id="roeService" class="com.evonymus.roe.service.RoeServiceImpl"
             p:roeDao-ref="roeDao" />
 
@@ -38,6 +43,11 @@
 
     <bean id="countryService" class="com.evonymus.roe.service.CountryServiceImpl"
             p:countryDao-ref="countryDao"/>
+
+    <bean id="perDiemService" class="com.evonymus.roe.service.PerDiemServiceImpl"
+            p:perDiemDao-ref="perDiemDao"/>
+
+    <!--Controllers-->
 
     <bean id="homeController" class="com.evonymus.roe.controller.HomeController"
             p:roeService-ref="roeService"/>
