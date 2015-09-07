@@ -19,6 +19,15 @@ public class CountryServiceImpl implements CountryService {
         }
     }
 
+    public List<Country> getCountryListSelected(String sel) {
+        try {
+            return countryDao.getCountryListSelected(sel);
+
+        } catch(EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
     public Country getCountry(int idCountry) {
         try {
             return countryDao.getCountry(idCountry);

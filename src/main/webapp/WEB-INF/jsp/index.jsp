@@ -83,24 +83,18 @@
                         calculate();
                     });
 
-                    $('#breakfast').blur(function() {
+                    $('#breakfast').keyup( function() {
                         calculate();
-                    })
+                    });
 
                     function calculate() {
                         $('#dateFromMessage').empty();
-                        if (dateFrom && dateTo) {
+                        var breakfast=parseInt($('#breakfast').val());
+                        if (dateFrom && dateTo && !isNaN(breakfast)) {
                             var diff= new Date(dateTo - dateFrom);
                             var id = $('#country option:selected').attr('id');
                             if (diff > 0 && id > 0 ) {
-                                var breakfast=parseInt($('#breakfast').val());
-                                if (breakfast==NaN) {
-                                    breakfast = 0;
-                                    $('#breakfast').val(0);
-                                }
-                                console.log(breakfast);
                                 var address= 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id + '/' + breakfast;
-                                console.log(address);
                                 $.ajax({
                                         url: 'perDiem/'+dateFrom.getTime() +'/'+dateTo.getTime()+'/'+ id + '/' + breakfast,
                                         dataType: "json",
@@ -135,24 +129,7 @@
                         }
                     }
 
-                    function getPerDiem(idCountry) {
-                        $('#perDiem').empty();
-                        if(idCountry) {
-                            $.ajax({
-                                    url: 'perDiem/'+ idCountry,
-                                    dataType: "json",
-                                    success: function(data) {
-                                        $('#perDiem').empty();
-                                        $('#perDiem').addClass("well");
-                                        var res = "<h4 class='text-center text-primary'> Per Diem Data</h4><table class='table' > <tr><th>Currency</th><th>Code</th><th>Rate</th></tr><tr><td>" 
-                                        + data.currency.name + "</td><td>" + data.currency.code + "</td><td>" + data.rate + "</td></tr></table>";
-
-                                        $('#perDiem').append(res);
-                                    }
-                            });
-                        }
-                    }
-                    function getCurrency() {
+                    function getCountries() {
                         $.ajax({
                                 url: 'service/countryList',
                                 datType: "json",
@@ -166,7 +143,7 @@
 
                     }
                     $(document).ready(function() {
-                        getCurrency();
+                        getCountries();
                     });
                 </script>
             </html>

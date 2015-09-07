@@ -68,4 +68,9 @@ public class RoeController {
     public @ResponseBody List<Country> getCountryList() {
         return countryService.getCountryList();
     }
+
+    @RequestMapping(value="/countryList/{sel}", method=RequestMethod.GET)
+    public @ResponseBody List<Country> getCountryList(@PathVariable("sel")String sel) {
+        return countryService.getCountryListSelected(sel);
+    }
 }
